@@ -41,7 +41,6 @@ k = nuke.thisKnob()
 
 # World Checkbox
 def w_vis(bool):
-    n["w_instructions"].setVisible(bool)
     n["w_line"].setVisible(bool)
     n["w_in"].setVisible(bool)
     n["w_zbrush_in"].setVisible(bool)
@@ -50,7 +49,6 @@ def w_vis(bool):
 
 # Tangent Checkbox
 def t_vis(bool):
-    n["t_instructions"].setVisible(bool)
     n["t_line"].setVisible(bool)
     n["t_in"].setVisible(bool)
     n["t_out"].setVisible(bool)
@@ -59,7 +57,6 @@ def t_vis(bool):
 
 # ZBrush Checkbox
 def z_vis(bool):
-    n["z_instructions"].setVisible(bool)
     n["z_line"].setVisible(bool)
     n["z_in"].setVisible(bool)
     n["z_out"].setVisible(bool)
@@ -94,6 +91,9 @@ def world():
     elif k.name() == "w_in" and k.value() == "Arnold":
         input("in_ch_ZYX", "in_mul__X_YZ") # Input FlipAndSwitch 47
         n["w_zbrush_in"].setValue("47")
+    elif k.name() == "w_in" and k.value() == "Clarisse":
+        input("in_ch_ZYX", "in_mul__X_YZ") # Input FlipAndSwitch 47
+        n["w_zbrush_in"].setValue("47")
     elif k.name() == "w_in" and k.value() == "Cycles":
         input("in_ch_YZX", "in_mul_X_YZ") # Input FlipAndSwitch 27
         n["w_zbrush_in"].setValue("27")
@@ -119,6 +119,9 @@ def world():
         output("out_mul__X_YZ", "out_ch_ZYX") # Output FlipAndSwitch 47
         n["w_zbrush_out"].setValue("47")
     elif k.name() == "w_out" and k.value() == "Arnold":
+        output("out_mul__X_YZ", "out_ch_ZYX") # Output FlipAndSwitch 47
+        n["w_zbrush_out"].setValue("47")
+    elif k.name() == "w_out" and k.value() == "Clarisse":
         output("out_mul__X_YZ", "out_ch_ZYX") # Output FlipAndSwitch 47
         n["w_zbrush_out"].setValue("47")
     elif k.name() == "w_out" and k.value() == "Cycles":
@@ -168,6 +171,9 @@ def tangent():
     elif k.name() == "t_in" and k.value() == "Maya/Renderman":
         input("in_ch_ZYX", "in_mul_X_Y_Z") # Input FlipAndSwitch 44
         n["t_zbrush_in"].setValue("44")
+    elif k.name() == "t_in" and k.value() == "Clarisse":
+        input("in_ch_ZYX", "in_mul_XYZ") # Input FlipAndSwitch 41
+        n["t_zbrush_in"].setValue("41")
     elif k.name() == "t_in" and k.value() == "Cycles":
         input("in_ch_YZX", "in_mul_XYZ") # Input FlipAndSwitch 25
         n["t_zbrush_in"].setValue("25")
@@ -201,6 +207,9 @@ def tangent():
     elif k.name() == "t_out" and k.value() == "Maya/Renderman":
         output("out_mul_X_Y_Z", "out_ch_ZYX") # Output FlipAndSwitch 44
         n["t_zbrush_out"].setValue("44")
+    elif k.name() == "t_out" and k.value() == "Clarisse":
+        output("out_mul_XYZ", "out_ch_ZYX") # Output FlipAndSwitch 41
+        n["t_zbrush_out"].setValue("41")
     elif k.name() == "t_out" and k.value() == "Cycles":
         output("out_mul_XYZ", "out_ch_ZXY") # Output FlipAndSwitch 25
         n["t_zbrush_out"].setValue("25")
