@@ -4,6 +4,60 @@ Below are "onCreate" and "knobChanged" knob values for Vector Displacement Conve
 
 import nuke
 
+"""
+Reset Button script
+
+def deselect():
+    allNodes = nuke.allNodes()
+    for node in allNodes:
+        node.setSelected(True)
+    nukescripts.remove_inputs()
+    for node in allNodes:
+        node.setSelected(False)
+
+n = nuke.thisNode()
+
+if n.knob("world_object").value() == False and n.knob("tangent").value() == False and n.knob("zbrush").value() == False:
+    deselect()
+    nuke.toNode("Output").setInput(0, nuke.toNode("Input"))
+    n["w_convert"].setVisible(False)
+    n["t_convert"].setVisible(False)
+elif n.knob("world_object").value() == True:
+    deselect()
+    nuke.toNode("in_ch_XYZ").setInput(0, nuke.toNode("Input"))
+    nuke.toNode("in_mul_XYZ").setInput(0, nuke.toNode(nuke.toNode("Input").dependent()[0]["name"].value()))
+    nuke.toNode("out_mul_XYZ").setInput(0, nuke.toNode(nuke.toNode("Input").dependent()[0]["name"].value()).dependent()[0])
+    nuke.toNode("out_ch_XYZ").setInput(0, nuke.toNode("out_mul_XYZ"))
+    nuke.toNode("Output").setInput(0, nuke.toNode("out_ch_XYZ"))
+    n["w_in"].setValue("ZBrush (Default World Export)")
+    n["w_out"].setValue("ZBrush (Default World Export)")
+    n["w_zbrush_in"].setValue("1")
+    n["w_zbrush_out"].setValue("1")
+    n["w_convert"].setVisible(False)
+elif n.knob("tangent").value() == True:
+    deselect()
+    nuke.toNode("in_ch_XYZ").setInput(0, nuke.toNode("Input"))
+    nuke.toNode("in_mul_XYZ").setInput(0, nuke.toNode(nuke.toNode("Input").dependent()[0]["name"].value()))
+    nuke.toNode("out_mul_XYZ").setInput(0, nuke.toNode(nuke.toNode("Input").dependent()[0]["name"].value()).dependent()[0])
+    nuke.toNode("out_ch_XYZ").setInput(0, nuke.toNode("out_mul_XYZ"))
+    nuke.toNode("Output").setInput(0, nuke.toNode("out_ch_XYZ"))
+    n["t_in"].setValue("ZBrush (Default Tangent Export")
+    n["t_out"].setValue("ZBrush (Default Tangent Export")
+    n["t_zbrush_in"].setValue("1")
+    n["t_zbrush_out"].setValue("1")
+    n["t_convert"].setVisible(False)
+elif n.knob("zbrush").value() == True:
+    deselect()
+    nuke.toNode("in_ch_XYZ").setInput(0, nuke.toNode("Input"))
+    nuke.toNode("in_mul_XYZ").setInput(0, nuke.toNode(nuke.toNode("Input").dependent()[0]["name"].value()))
+    nuke.toNode("out_mul_XYZ").setInput(0, nuke.toNode(nuke.toNode("Input").dependent()[0]["name"].value()).dependent()[0])
+    nuke.toNode("out_ch_XYZ").setInput(0, nuke.toNode("out_mul_XYZ"))
+    nuke.toNode("Output").setInput(0, nuke.toNode("out_ch_XYZ"))
+    n["z_in"].setValue(1)
+    n["z_out"].setValue(1)
+else:
+    pass
+"""
 
 # Force knob changes
 
@@ -85,7 +139,10 @@ def output(output_multiply, output_shuffle):
 
 # World Pulldown List
 def world():
-    if k.name() == "w_in" and k.value() == "Mudbox (World/Object)":
+    if k.name() == "w_in" and k.value() == "ZBrush (Default World Export)":
+        input("in_ch_XYZ", "in_mul_XYZ") # Input FlipAndSwitch 1
+        n["w_zbrush_in"].setValue("1")
+    elif k.name() == "w_in" and k.value() == "Mudbox (World/Object)":
         input("in_ch_ZYX", "in_mul__X_YZ") # Input FlipAndSwitch 47
         n["w_zbrush_in"].setValue("47")
     elif k.name() == "w_in" and k.value() == "Arnold":
@@ -115,6 +172,9 @@ def world():
     elif k.name() == "w_in" and k.value() == "V-Ray (Object)":
         input("in_ch_ZYX", "in_mul__X_YZ") # Input FlipAndSwitch 47
         n["w_zbrush_in"].setValue("47")
+    elif k.name() == "w_out" and k.value() == "ZBrush (Default World Export)":
+        output("out_mul_XYZ", "out_ch_XYZ") # Output FlipAndSwitch 1
+        n["w_zbrush_out"].setValue("1")
     elif k.name() == "w_out" and k.value() == "Mudbox (World/Object)":
         output("out_mul__X_YZ", "out_ch_ZYX") # Output FlipAndSwitch 47
         n["w_zbrush_out"].setValue("47")
@@ -150,7 +210,10 @@ def world():
 
 # Tangent Pulldown List
 def tangent():
-    if k.name() == "t_in" and k.value() == "Mudbox Absolute Tangent":
+    if k.name() == "t_in" and k.value() == "ZBrush (Default Tangent Export)":
+        input("in_ch_XYZ", "in_mul_XYZ") # Input FlipAndSwitch 1
+        n["t_zbrush_in"].setValue("1")
+    elif k.name() == "t_in" and k.value() == "Mudbox Absolute Tangent":
         input("in_ch_YZX", "in_mul_XYZ") # Input FlipAndSwitch 25
         n["t_zbrush_in"].setValue("25")
     elif k.name() == "t_in" and k.value() == "Houdini/Arnold":
@@ -186,6 +249,9 @@ def tangent():
     elif k.name() == "t_in" and k.value() == "V-Ray (Absolute)":
         input("in_ch_YZX", "in_mul_XYZ") # Input FlipAndSwitch 25
         n["t_zbrush_in"].setValue("25")
+    elif k.name() == "t_out" and k.value() == "ZBrush (Default Tangent Export)":
+        output("out_mul_XYZ", "out_ch_XYZ") # Output FlipAndSwitch 1
+        n["t_zbrush_out"].setValue("1")
     elif k.name() == "t_out" and k.value() == "Mudbox Absolute Tangent":
         output("out_mul_XYZ", "out_ch_ZXY") # Output FlipAndSwitch 25
         n["t_zbrush_out"].setValue("25")
@@ -472,8 +538,8 @@ def main():
         z_vis(False)
         n["t_convert"].setVisible(False)
         n["line"].setVisible(True)
-        input("in_ch_ZYX", "in_mul__X_YZ") # Input FlipAndSwitch 47
-        output("out_mul__X_YZ", "out_ch_ZYX") # Output FlipAndSwitch 47
+        input("in_ch_XYZ", "in_mul_XYZ") # Input FlipAndSwitch 47
+        output("out_mul_XYZ", "out_ch_XYZ") # Output FlipAndSwitch 47
     elif k.name() == "tangent":
         n["world_object"].setValue(False)
         n["zbrush"].setValue(False)
@@ -482,8 +548,8 @@ def main():
         z_vis(False)
         n["w_convert"].setVisible(False)
         n["line"].setVisible(True)
-        input("in_ch_YZX", "in_mul_XYZ") # Input FlipAndSwitch 25
-        output("out_mul_XYZ", "out_ch_ZXY") # Output FlipAndSwitch 25
+        input("in_ch_XYZ", "in_mul_XYZ") # Input FlipAndSwitch 25
+        output("out_mul_XYZ", "out_ch_XYZ") # Output FlipAndSwitch 25
     elif k.name() == "zbrush":
         n["world_object"].setValue(False)
         n["tangent"].setValue(False)
